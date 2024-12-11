@@ -87,6 +87,9 @@ pub struct CliArgs {
     #[arg(short, long)]
     pub network: IpNet,
 
+    #[arg(long, default_value = "true")]
+    pub ipv6: bool,
+
     /// Be verbose
     ///
     /// Provide twice for very verbose.

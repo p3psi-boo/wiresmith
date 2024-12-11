@@ -10,7 +10,8 @@ use tokio_util::sync::CancellationToken;
 use tracing::{debug, error, info, trace};
 
 use wiresmith::{
-    consul::ConsulClient, networkd::NetworkdConfiguration, wireguard::WgPeer, CONSUL_TTL,
+    consul::ConsulClient, first_public_ipv6, networkd::NetworkdConfiguration, wireguard::WgPeer,
+    CONSUL_TTL,
 };
 
 #[tokio::main]
@@ -61,13 +62,19 @@ async fn main() -> Result<()> {
     let endpoint_address = if let Some(endpoint_address) = &args.endpoint_address {
         endpoint_address.clone()
     } else if let Some(endpoint_interface) = &args.endpoint_interface {
-        // Find suitable IP on provided interface.
-        endpoint_interface
-            .ips
-            .first()
-            .context("No IPs on interface")?
-            .ip()
-            .to_string()
+        if args.ipv6 {
+            first_public_ipv6(endpoint_interface)
+                .context("No public IPv6 on interface")?
+                .ip()
+                .to_string()
+        } else {
+            endpoint_interface
+                .ips
+                .first()
+                .context("No IPs on interface")?
+                .ip()
+                .to_string()
+        }
     } else {
         unreachable!("Should have been handled by arg parsing");
     };
