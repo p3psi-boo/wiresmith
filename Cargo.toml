@@ -28,9 +28,10 @@ pnet = "0.35"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1"
-tokio = { version = "1", features = ["rt-multi-thread", "macros", "process", "fs", "signal"] }
+tokio = { version = "1", features = ["full"] }
 tracing = { version = "0.1", features = ["log"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+axum = "0.7"
 wireguard-keys = "0.1"
 humantime = "2.1.0"
 uuid = { version = "1.11.0", features = ["serde"] }
@@ -45,3 +46,5 @@ port_check = "0.2"
 pretty_assertions = "1"
 rand = "0.9"
 rstest = "0.24"
+tempfile = "3"
+tower = { version = "0.4", features = ["util"] } # Added for ServiceExt in tests

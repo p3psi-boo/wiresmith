@@ -27,6 +27,7 @@ async fn address_contained_within_network(
     #[case] success: bool,
 ) -> Result<()> {
     let output = assert_cmd::Command::cargo_bin("wiresmith")?
+        .arg("run")
         .arg("--network")
         .arg(network)
         .arg("--address")

@@ -557,8 +557,10 @@ async fn ensure_config_exists(
     peer_url: Url,
     index: &mut Option<String>,
 ) -> Result<Uuid> {
-    let query: &[_] = if let Some(index) = index {
-        &[("index", index)]
+    let query_val;
+    let query: &[_] = if let Some(index_str) = index {
+        query_val = [("index", index_str.as_str())];
+        &query_val
     } else {
         &[]
     };

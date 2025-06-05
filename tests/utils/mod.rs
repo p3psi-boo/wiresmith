@@ -77,6 +77,7 @@ impl WiresmithContainer {
             .arg("exec")
             .arg(&container_name)
             .arg("wiresmith")
+            .arg("run") // Added "run" subcommand here
             .args([
                 "--consul-address",
                 &format!("http://consul-{consul_port}:{consul_port}"),
